@@ -1,3 +1,5 @@
+use string_fixed::StringFixed;
+
 pub trait TraitGameData {
     fn initialize(&mut self);
     fn update(&mut self);
@@ -6,14 +8,15 @@ pub trait TraitGameData {
 }
 
 pub struct Game<D: TraitGameData, G> {
+    name: StringFixed,
     frame_total: u32,
     pub data: D,
     pub gl: G,
 }
 
 impl<D: TraitGameData, G> Game<D, G> {
-    pub fn initialize(&mut self) {
-        self.frame_total = 0;
+    pub fn initialize(&mut self, name: &str) {
+        self.name.from_string(name);
         self.data.initialize();
     }
     pub fn update(&mut self) {
